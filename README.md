@@ -1,15 +1,15 @@
+![alt ruby_silhouette](https://raw.githubusercontent.com/lukes/profile/master/img/ruby.png)
+
 # Profile
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/profile`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Entirely non-discriminatory Ruby code profiling. This gem is a small wrapper around the [ruby-prof](https://github.com/ruby-prof/ruby-prof) gem, which is its only dependency. It lets you do simple but powerful profiling of your friend's bad code.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'profile'
+gem 'profile', "~> 1.0"
 ```
 
 And then execute:
@@ -20,16 +20,58 @@ Or install it yourself as:
 
     $ gem install profile
 
-## Usage
+## Getting Started
 
-TODO: Write usage instructions here
+Wrap the slow code like this:
 
-## Development
+```ruby
+Profile.this("some-label") do
+  # My slow code...
+end
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+The next time you call your code it will be profiled and three files will be written into a directory `profiler/some-label`:
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+| File | Description |
+| ------------- | ------------- |
+| `graph.html` | See and drill down the call tree to find where the time is spent |
+| `stack.html` | Enables you to visualize the profiled code as a stack |
+| `flat.txt` | List of all functions called, the time spent in each and the number of calls made to that function |
+
+## Config
+
+The following configurations options for Profile can be set:
+
+```ruby
+Profile.config = {
+  dir: '/tmp/my-dir'
+  preserve: false
+}
+```
+
+| Option | Description |
+| ------------- | ------------- |
+| `dir`  | Change the directory the files will be generated in. Default is a directory called `profiler` in your current path |
+| `preserve` | When `false`, each time the code is profiled the previous files will be overwritten. When `true`, files are placed in a directory stamped with the current unix time to allow new files to be generated with each run. Default is `false` |
+
+## Conditional Profiling
+
+You can conditionally profile by passing a boolean as a second parameter:
+
+```ruby
+Profile.this("my-label", user.is_admin?) do
+  # Your slow code here
+end
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/profile.
+Bug reports and pull requests are welcome.
+
+To run the test suite:
+
+    bundle exec rspec
+
+## License
+
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
