@@ -36,7 +36,7 @@ Profile.run("some-label") do
 end
 ```
 
-The next time you call the code it will be profiled and three files will be written into a directory `profiler`, and in the second example `profiler/some-label`.
+The next time you call the code it will be profiled and three files will be written into a directory `profiled`, and in the second example `profiled/some-label`:
 
 | File | Description |
 | ------------- | ------------- |

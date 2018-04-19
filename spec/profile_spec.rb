@@ -7,7 +7,7 @@ RSpec.describe Profile do
   describe "Configuration" do
 
     it "should provide a default output dir" do
-      expect(Profile.config[:dir]).to eq 'profiler'
+      expect(Profile.config[:dir]).to eq 'profiled'
     end
 
     it "should allow you to specific a dir" do
@@ -27,7 +27,7 @@ RSpec.describe Profile do
       allow_any_instance_of(RubyProf::CallStackPrinter).to receive(:print).and_return(nil)
     end
 
-    path = File.join(File.dirname(__FILE__), "../lib/profiler")
+    path = File.join(File.dirname(__FILE__), "../lib/profiled")
 
     after do
       FileUtils.rm_rf(path)

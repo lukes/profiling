@@ -2,7 +2,7 @@ class Profile
   module Configuration
 
     DEFAULT_CONFIG = {
-      dir: 'profiler'
+      dir: 'profiled'
     }
 
     attr_accessor :config
