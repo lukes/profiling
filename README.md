@@ -57,6 +57,17 @@ Profiling.config = {
 }
 ```
 
+### Rails Initializer
+
+This initializer is recommended if you're planning to profile in Rails:
+
+```ruby
+# config/initializer/profiling.rb
+Profiling.config = {
+  dir: Rails.root.join('tmp/profiling')
+}
+```
+
 ## Conditional Profiling
 
 Pass an argument `if:` to enable or disable profiling:
