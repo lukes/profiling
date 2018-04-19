@@ -29,4 +29,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "yard", "~> 0"
 
   spec.add_dependency "ruby-prof", "~> 0.15"
+
+  spec.required_ruby_version = '>= 1.9.3' # Due to limitation of ruby-prof ~> v0.15
 end
