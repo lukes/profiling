@@ -59,16 +59,10 @@ Profile.config = {
 
 ## Conditional Profiling
 
-Pass a second argument `if:` to enable or disable profiling:
+Pass an argument `if:` to enable or disable profiling:
 
 ```ruby
 Profile.run(if: user.is_admin?) do
-  # Slow code here...
-end
-
-# or:
-
-Profile.run("my-label", if: user.is_admin?) do
   # Slow code here...
 end
 ```
@@ -76,9 +70,10 @@ end
 ##
 ## Preserving artefacts
 
-Every time the code is profiled the previous files will be overwritten unless the label's dynamic. To keep old files, include the current time in the label so new files are generated with each run:
+Every time code is profiled the previous files will be overwritten unless the label's dynamic. To keep old files, you could add the current time in the label so new files are generated with each run:
 
 ```ruby
+# Files will be in `profiled/my-label-1524132842`
 Profile.run("my-label-#{Time.now.to_i}") do
   # Slow code here...
 end
@@ -89,10 +84,12 @@ end
 Labels translate to directories, so use `/` in your labels if you want to group profiling together logically:
 
 ```ruby
+# Files will be in `profiled/post/create`
 Profile.run("post/create") do
   # Slow code here...
 end
 
+# Files will be in `profiled/post/update`
 Profile.run("post/update") do
   # Slow code here...
 end
