@@ -1,6 +1,6 @@
 require "bundler/setup"
 require "fileutils"
-require "profile"
+require "profiling"
 require "pry"
 require "ruby-prof"
 

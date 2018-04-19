@@ -1,19 +1,17 @@
 require 'fileutils'
 require 'ostruct'
 
-Dir[File.dirname(__FILE__) + '/profile/*.rb'].each { |file| require file }
+Dir[File.dirname(__FILE__) + '/profiling/*.rb'].each { |file| require file }
 
-class Profile
+class Profiling
   extend Configuration
 
-  def self.run(label=nil, options={})
+  def self.run(label='', options={})
     enabled = options[:if].nil? ? true : !!options[:if]
 
     return yield unless enabled
 
-    label ||= ''
-
-    # Create directories
+    # Create directory
     subdir = File.join(File.dirname(__FILE__), config[:dir], label)
     FileUtils.mkdir_p subdir unless File.exist? subdir
 

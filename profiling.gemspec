@@ -1,11 +1,11 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "profile/version"
+require "profiling/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "profiling"
-  spec.version       = Profile::VERSION
+  spec.version       = Profiling::VERSION
   spec.authors       = ["Luke Duncalfe"]
   spec.email         = ["lduncalfe@eml.cc"]
 

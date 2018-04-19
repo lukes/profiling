@@ -1,4 +1,4 @@
-![alt ruby_silhouette](https://raw.githubusercontent.com/lukes/profile/master/img/ruby.png)
+![alt ruby_silhouette](https://raw.githubusercontent.com/lukes/profiling/master/img/ruby.png)
 
 # Profiling
 
@@ -28,18 +28,18 @@ Or install it yourself as:
 Profile slow code from your friend or colleague like this:
 
 ```ruby
-Profile.run do
+Profiling.run do
   # Slow code here...
 end
 
 # or
 
-Profile.run("some-label") do
+Profiling.run("some-label") do
   # Slow code here...
 end
 ```
 
-The next time you call the code it will be profiled and three files will be written into a directory `profiled`, and in the second example `profiled/some-label`:
+The next time you call the code it will be profiled and three files will be written into a directory `profiling`, and in the second example `profiling/some-label`:
 
 | File | Description |
 | ------------- | ------------- |
@@ -52,7 +52,7 @@ The next time you call the code it will be profiled and three files will be writ
 Change the directory the files will be generated in:
 
 ```ruby
-Profile.config = {
+Profiling.config = {
   dir: '/tmp/my-dir'
 }
 ```
@@ -62,7 +62,7 @@ Profile.config = {
 Pass an argument `if:` to enable or disable profiling:
 
 ```ruby
-Profile.run(if: user.is_admin?) do
+Profiling.run(if: user.is_admin?) do
   # Slow code here...
 end
 ```
@@ -73,8 +73,8 @@ end
 Every time code is profiled the previous files will be overwritten unless the label's dynamic. To keep old files, you could add the current time in the label so new files are generated with each run:
 
 ```ruby
-# Files will be in `profiled/my-label-1524132842`
-Profile.run("my-label-#{Time.now.to_i}") do
+# Files will be in `profiling/my-label-1524132842`
+Profiling.run("my-label-#{Time.now.to_i}") do
   # Slow code here...
 end
 ```
@@ -84,13 +84,13 @@ end
 Labels translate to directories, so use `/` in your labels if you want to group profiling together logically:
 
 ```ruby
-# Files will be in `profiled/post/create`
-Profile.run("post/create") do
+# Files will be in `profiling/post/create`
+Profiling.run("post/create") do
   # Slow code here...
 end
 
-# Files will be in `profiled/post/update`
-Profile.run("post/update") do
+# Files will be in `profiling/post/update`
+Profiling.run("post/update") do
   # Slow code here...
 end
 ```
