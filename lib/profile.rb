@@ -1,25 +1,21 @@
-require "profile/version"
+require 'fileutils'
 require 'ostruct'
 
-module Profile
+Dir[File.dirname(__FILE__) + '/profile/*.rb'].each { |file| require file }
 
-  @@dir = nil
-  @@preserve = false
+class Profile
+  extend Configuration
 
-  def self.configure(opts)
-    options = OpenStruct.new(opts)
+  def self.run(label=nil, options={})
+    enabled = options[:if].nil? ? true : !!options[:if]
 
-    @@dir = options.dir || 'profiler'
-    @@preserve = options.preserve || false
-  end
-
-  def self.this(file_name=nil, enabled=true)
     return yield unless enabled
 
-    file_name ||= ''
+    label ||= ''
 
-    # Create dir automatically
-    FileUtils.mkdir_p @@dir unless File.exist? @@dir
+    # Create directories
+    subdir = File.join(File.dirname(__FILE__), config[:dir], label)
+    FileUtils.mkdir_p subdir unless File.exist? subdir
 
     require 'ruby-prof'
 
@@ -34,16 +30,11 @@ module Profile
 
     results = RubyProf.stop
 
-    subdir = File.join(@@dir, "#{file_name}-#{Time.now.to_i}")
-    FileUtils.mkdir_p subdir unless File.exist? subdir
-
-    # Print a flat profile to text
     File.open(File.join(subdir, "graph.html"), 'w') do |file|
       RubyProf::GraphHtmlPrinter.new(results).print(file)
     end
 
     File.open(File.join(subdir, "flat.txt"), 'w') do |file|
-      # RubyProf::FlatPrinter.new(results).print(file)
       RubyProf::FlatPrinterWithLineNumbers.new(results).print(file)
     end
 

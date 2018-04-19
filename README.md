@@ -2,7 +2,7 @@
 
 # Profile
 
-Entirely non-discriminatory Ruby code profiling. This gem is a small wrapper around the [ruby-prof](https://github.com/ruby-prof/ruby-prof) gem, which is its only dependency. It lets you do simple but powerful profiling of your friend's bad code.
+Non-discriminatory profiling for your MRI Ruby code. This gem is a small wrapper around the [ruby-prof](https://github.com/ruby-prof/ruby-prof) gem, which is its only dependency. It lets you do simple but powerful profiling of your friend's bad code.
 
 ## Installation
 
@@ -22,44 +22,78 @@ Or install it yourself as:
 
 ## Getting Started
 
-Wrap your friend's code like this:
+Profile slow code from your friend or colleague like this:
 
 ```ruby
-Profile.this("some-label") do
+Profile.run do
   # Slow code here...
 end
+
+# or
+
+Profile.run("some-label") {
+  # Slow code here...
+}
 ```
 
-The next time you call the code it will be profiled and three files will be written into a directory `profiler/some-label`:
+The next time you call the code it will be profiled and three files will be written into a directory `profiler`, and in the second example `profiler/some-label`.
 
 | File | Description |
 | ------------- | ------------- |
-| `graph.html` | See and drill down the call tree to find where the time is spent |
-| `stack.html` | Enables you to visualize the profiled code as a stack |
+| `graph.html` | Drill down into the call tree to see where the time is spent |
+| `stack.html` | See the profiled code as a nested stack |
 | `flat.txt` | List of all functions called, the time spent in each and the number of calls made to that function |
 
-## Config
+## Configuration
 
-The following configurations options are available:
 
 ```ruby
 Profile.config = {
   dir: '/tmp/my-dir'
-  preserve: false
 }
 ```
 
 | Option | Description |
 | ------------- | ------------- |
 | `dir`  | Change the directory the files will be generated in. Default is a directory called `profiler` in your current path |
-| `preserve` | When `false`, each time the code is profiled the previous files will be overwritten. When `true`, files are placed in a directory stamped with the current unix time and new files are generated with each run. Default is `false` |
 
 ## Conditional Profiling
 
-Pass a boolean as a second parameter to toggle if profiling should occur:
+Pass a second argument `if:` to enable or disable profiling:
 
 ```ruby
-Profile.this("my-label", user.is_admin?) do
+Profile.run(if: user.is_admin?) do
+  # Slow code here...
+end
+
+# or:
+
+Profile.run("my-label", if: user.is_admin?) do
+  # Slow code here...
+end
+```
+
+##
+## Preserving artefacts
+
+Every time the code is profiled the previous files will be overwritten. To keep old files, include the current time in the label so new files are generated with each run:
+
+```ruby
+Profile.run("my-label-#{Time.now.to_i}") do
+  # Slow code here...
+end
+```
+
+## Organizing artefacts
+
+Labels translate to directories, so use `/` in your labels if you're doing a lot of profiling and want to organize it logically:
+
+```ruby
+Profile.run("post/create") do
+  # Slow code here...
+end
+
+Profile.run("post/update") do
   # Slow code here...
 end
 ```

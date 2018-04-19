@@ -1,5 +1,8 @@
 require "bundler/setup"
+require "fileutils"
 require "profile"
+require "pry"
+require "ruby-prof"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
