@@ -73,7 +73,6 @@ end
 Every time code is profiled the previous files will be overwritten unless the label's dynamic. To keep old files, you could add the current time in the label so new files are generated with each run:
 
 ```ruby
-# Files will be in `profiling/my-label-1524132842`
 Profiling.run("my-label-#{Time.now.to_i}") do
   # Slow code here...
 end
@@ -81,15 +80,13 @@ end
 
 ## Organizing artefacts
 
-Labels translate to directories, so use `/` in your labels if you want to group profiling together logically:
+Labels translate to directories, so use `/` in your labels to group profiling together logically:
 
 ```ruby
-# Files will be in `profiling/post/create`
 Profiling.run("post/create") do
   # Slow code here...
 end
 
-# Files will be in `profiling/post/update`
 Profiling.run("post/update") do
   # Slow code here...
 end
