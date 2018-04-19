@@ -39,7 +39,9 @@ Profiling.run("some-label") do
 end
 ```
 
-The next time you call the code it will be profiled and three files will be written into a directory `profiling`, and in the second example `profiling/some-label`:
+The next time you call the code it will be profiled and three files will be written into a directory `profiling`, and in the second example `profiling/some-label`.
+
+### Files Generated
 
 | File | Description |
 | ------------- | ------------- |
