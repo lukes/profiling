@@ -20,6 +20,9 @@ RSpec.describe Profiling do
   describe "#run" do
 
     before do
+      @path = File.join(File.dirname(__FILE__), "tmp/profiling")
+      Profiling.configure(dir: @path)
+
       allow(RubyProf).to receive(:start).and_return(true)
       allow(RubyProf).to receive(:stop).and_return(true)
       allow_any_instance_of(RubyProf::GraphHtmlPrinter).to receive(:print).and_return(nil)
@@ -27,21 +30,19 @@ RSpec.describe Profiling do
       allow_any_instance_of(RubyProf::CallStackPrinter).to receive(:print).and_return(nil)
     end
 
-    path = File.join(File.dirname(__FILE__), "../lib/profiling")
-
     after do
-      FileUtils.rm_rf(path)
+      FileUtils.rm_rf(@path)
     end
 
     it "should create correct directories based on label" do
       Profiling.run("my/label") { 1 * 1}
-      expect(File.exist?(File.join(path, "my/label"))).to be true
+      expect(File.exist?(File.join(@path, "my/label"))).to be true
     end
 
     it "should write the correct files" do
       Profiling.run("file-test") { 1 * 1}
       ['graph.html', 'stack.html', 'flat.txt'].each do |file|
-        expect(File.exist?(File.join(path, "file-test/#{file}"))).to be true
+        expect(File.exist?(File.join(@path, "file-test/#{file}"))).to be true
       end
     end
 

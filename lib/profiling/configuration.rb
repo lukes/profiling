@@ -2,7 +2,7 @@ class Profiling
   module Configuration
 
     DEFAULT_CONFIG = {
-      dir: 'profiled'
+      dir: 'profiling'
     }
 
     attr_accessor :config
