@@ -4,14 +4,14 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "profile/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "profile"
+  spec.name          = "profiling"
   spec.version       = Profile::VERSION
   spec.authors       = ["Luke Duncalfe"]
   spec.email         = ["lduncalfe@eml.cc"]
 
   spec.summary       = "Non-discriminatory Ruby code profiling: This gem is a small wrapper around the ruby-prof gem to do simple but powerful profiling"
   spec.description   = "Non-discriminatory Ruby code profiling: This gem is a small wrapper around the ruby-prof gem to do simple but powerful profiling"
-  spec.homepage      = "https://github.com/lukes/profile"
+  spec.homepage      = "https://github.com/lukes/profiling"
   spec.license       = "MIT"
 
   spec.files         = Dir.glob("{bin,lib}/**/*") + %w(LICENCE.txt README.md)

@@ -1,18 +1,18 @@
 ![alt ruby_silhouette](https://raw.githubusercontent.com/lukes/profile/master/img/ruby.png)
 
-# Profile
+# Profiling
 
 Non-discriminatory profiling for your MRI Ruby code. This gem is a small wrapper around the [ruby-prof](https://github.com/ruby-prof/ruby-prof) gem, which is its only dependency. It lets you do simple but powerful profiling of your friend's bad code.
 
-[![Gem Version](https://badge.fury.io/rb/profile.svg)](https://badge.fury.io/rb/profile)
-[![CircleCI](https://circleci.com/gh/lukes/profile/tree/master.svg?style=shield)](https://circleci.com/gh/lukes/profile/tree/master)
+[![Gem Version](https://badge.fury.io/rb/profiling.svg)](https://badge.fury.io/rb/profiling)
+[![CircleCI](https://circleci.com/gh/lukes/profiling/tree/master.svg?style=shield)](https://circleci.com/gh/lukes/profiling/tree/master)
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'profile', "~> 1.0"
+gem 'profiling', "~> 1.0"
 ```
 
 And then execute:
@@ -21,7 +21,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install profile
+    $ gem install profiling
 
 ## Getting Started
 
