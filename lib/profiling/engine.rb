@@ -11,16 +11,18 @@ class Profiler
 
       require 'ruby-prof'
 
-      RubyProf.start
+      profile = RubyProf::Profile.new
+      profile.exclude_methods!(::Profiler::Engine, :run)
+      profile.start
 
       begin
         yield
       rescue => e
-        RubyProf.stop
+        profile.stop
         raise e
       end
 
-      @results = RubyProf.stop
+      @results = profile.stop
       out()
     end
 
