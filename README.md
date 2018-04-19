@@ -40,7 +40,7 @@ The next time you call the code it will be profiled and three files will be writ
 
 ## Config
 
-The following configurations options for Profile can be set:
+The following configurations options are available:
 
 ```ruby
 Profile.config = {
@@ -52,15 +52,15 @@ Profile.config = {
 | Option | Description |
 | ------------- | ------------- |
 | `dir`  | Change the directory the files will be generated in. Default is a directory called `profiler` in your current path |
-| `preserve` | When `false`, each time the code is profiled the previous files will be overwritten. When `true`, files are placed in a directory stamped with the current unix time to allow new files to be generated with each run. Default is `false` |
+| `preserve` | When `false`, each time the code is profiled the previous files will be overwritten. When `true`, files are placed in a directory stamped with the current unix time and new files are generated with each run. Default is `false` |
 
 ## Conditional Profiling
 
-Conditionally profile by passing a boolean as a second parameter. If `false` profiling will be disabled:
+Pass a boolean as a second parameter to toggle if profiling should occur:
 
 ```ruby
 Profile.this("my-label", user.is_admin?) do
-  # Your slow code here
+  # Slow code here...
 end
 ```
 
