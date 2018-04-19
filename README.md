@@ -67,7 +67,6 @@ Profiling.run(if: user.is_admin?) do
 end
 ```
 
-##
 ## Preserving artefacts
 
 Every time code is profiled the previous files will be overwritten unless the label's dynamic. To keep old files, you could add the current time in the label so new files are generated with each run:
