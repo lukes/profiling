@@ -59,7 +59,7 @@ Profiler.config = {
 }
 ```
 
-### Rails Initializer
+## Rails Initializer
 
 This initializer is recommended if you're planning to profile in Rails:
 
@@ -90,7 +90,7 @@ Profiler.run("my-label-#{Time.now.to_i}") do
 end
 ```
 
-### Organizing artefacts
+## Organizing artefacts
 
 Labels translate to directories, so use `/` in your labels to group profiling together logically:
 
