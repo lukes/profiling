@@ -6,13 +6,13 @@ Dir[File.dirname(__FILE__) + '/profiling/*.rb'].each { |file| require file }
 class Profiling
   extend Configuration
 
-  def self.run(label='', options={})
+  def self.run(label=nil, options={})
     enabled = options[:if].nil? ? true : !!options[:if]
 
     return yield unless enabled
 
     # Create directory
-    subdir = File.join(config[:dir], label)
+    subdir = File.join(config[:dir], label.to_s)
     FileUtils.mkdir_p subdir unless File.exist? subdir
 
     require 'ruby-prof'

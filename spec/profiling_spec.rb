@@ -34,6 +34,11 @@ RSpec.describe Profiling do
       FileUtils.rm_rf(@path)
     end
 
+    it "should create correct directories" do
+      Profiling.run { 1 * 1}
+      expect(File.exist?(File.join(@path))).to be true
+    end
+
     it "should create correct directories based on label" do
       Profiling.run("my/label") { 1 * 1}
       expect(File.exist?(File.join(@path, "my/label"))).to be true
