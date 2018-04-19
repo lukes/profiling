@@ -31,9 +31,9 @@ end
 
 # or
 
-Profile.run("some-label") {
+Profile.run("some-label") do
   # Slow code here...
-}
+end
 ```
 
 The next time you call the code it will be profiled and three files will be written into a directory `profiler`, and in the second example `profiler/some-label`.
@@ -46,16 +46,13 @@ The next time you call the code it will be profiled and three files will be writ
 
 ## Configuration
 
+Change the directory the files will be generated in:
 
 ```ruby
 Profile.config = {
   dir: '/tmp/my-dir'
 }
 ```
-
-| Option | Description |
-| ------------- | ------------- |
-| `dir`  | Change the directory the files will be generated in. Default is a directory called `profiler` in your current path |
 
 ## Conditional Profiling
 
@@ -76,7 +73,7 @@ end
 ##
 ## Preserving artefacts
 
-Every time the code is profiled the previous files will be overwritten. To keep old files, include the current time in the label so new files are generated with each run:
+Every time the code is profiled the previous files will be overwritten unless the label's dynamic. To keep old files, include the current time in the label so new files are generated with each run:
 
 ```ruby
 Profile.run("my-label-#{Time.now.to_i}") do
@@ -86,7 +83,7 @@ end
 
 ## Organizing artefacts
 
-Labels translate to directories, so use `/` in your labels if you're doing a lot of profiling and want to organize it logically:
+Labels translate to directories, so use `/` in your labels if you want to group profiling together logically:
 
 ```ruby
 Profile.run("post/create") do
