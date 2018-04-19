@@ -1,5 +1,4 @@
 class Profiler
-
   module Engine
 
     def run(label=nil, options={})
@@ -7,8 +6,8 @@ class Profiler
       return yield unless enabled
 
       # Create directory
-      dir = File.join(config[:dir], label.to_s)
-      FileUtils.mkdir_p(dir) unless File.exist?(dir)
+      @dir = File.join(config[:dir], label.to_s)
+      FileUtils.mkdir_p(@dir) unless File.exist?(@dir)
 
       require 'ruby-prof'
 
@@ -21,18 +20,23 @@ class Profiler
         raise e
       end
 
-      results = RubyProf.stop
+      @results = RubyProf.stop
+      out()
+    end
 
-      File.open(File.join(dir, "graph.html"), 'w') do |file|
-        RubyProf::GraphHtmlPrinter.new(results).print(file)
+    private
+
+    def out
+      File.open(File.join(@dir, "graph.html"), 'w') do |file|
+        RubyProf::GraphHtmlPrinter.new(@results).print(file)
       end
 
-      File.open(File.join(dir, "flat.txt"), 'w') do |file|
-        RubyProf::FlatPrinterWithLineNumbers.new(results).print(file)
+      File.open(File.join(@dir, "flat.txt"), 'w') do |file|
+        RubyProf::FlatPrinterWithLineNumbers.new(@results).print(file)
       end
 
-      File.open(File.join(dir, "stack.html"), 'w') do |file|
-        RubyProf::CallStackPrinter.new(results).print(file)
+      File.open(File.join(@dir, "stack.html"), 'w') do |file|
+        RubyProf::CallStackPrinter.new(@results).print(file)
       end
     end
 
