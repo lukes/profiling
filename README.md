@@ -28,13 +28,13 @@ Or install it yourself as:
 Profile slow code from your friend or colleague like this:
 
 ```ruby
-Profiling.run do
+Profiler.run do
   # Slow code here...
 end
 
 # or
 
-Profiling.run("some-label") do
+Profiler.run("some-label") do
   # Slow code here...
 end
 ```
@@ -54,7 +54,7 @@ The next time you call the code it will be profiled and three files will be writ
 Change the directory the files will be generated in:
 
 ```ruby
-Profiling.config = {
+Profiler.config = {
   dir: '/tmp/my-dir'
 }
 ```
@@ -65,7 +65,7 @@ This initializer is recommended if you're planning to profile in Rails:
 
 ```ruby
 # config/initializer/profiling.rb
-Profiling.config = {
+Profiler.config = {
   dir: Rails.root.join('tmp/profiling')
 }
 ```
@@ -75,7 +75,7 @@ Profiling.config = {
 Pass an argument `if:` to enable or disable profiling:
 
 ```ruby
-Profiling.run(if: user.is_admin?) do
+Profiler.run(if: user.is_admin?) do
   # Slow code here...
 end
 ```
@@ -85,21 +85,21 @@ end
 Every time code is profiled the previous files will be overwritten unless the label's dynamic. To keep old files, you could add the current time in the label so new files are generated with each run:
 
 ```ruby
-Profiling.run("my-label-#{Time.now.to_i}") do
+Profiler.run("my-label-#{Time.now.to_i}") do
   # Slow code here...
 end
 ```
 
-## Organizing artefacts
+### Organizing artefacts
 
 Labels translate to directories, so use `/` in your labels to group profiling together logically:
 
 ```ruby
-Profiling.run("post/create") do
+Profiler.run("post/create") do
   # Slow code here...
 end
 
-Profiling.run("post/update") do
+Profiler.run("post/update") do
   # Slow code here...
 end
 ```

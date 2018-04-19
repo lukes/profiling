@@ -3,7 +3,7 @@ require 'ostruct'
 
 Dir[File.dirname(__FILE__) + '/profiling/*.rb'].each { |file| require file }
 
-class Profiling
+class Profiler
   extend Configuration
 
   def self.run(label=nil, options={})

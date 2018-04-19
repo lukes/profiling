@@ -5,7 +5,7 @@ require "profiling/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "profiling"
-  spec.version       = Profiling::VERSION
+  spec.version       = Profiler::VERSION
   spec.authors       = ["Luke Duncalfe"]
   spec.email         = ["lduncalfe@eml.cc"]
 

@@ -1,4 +1,4 @@
-class Profiling
+class Profiler
   module Configuration
 
     DEFAULT_CONFIG = {
