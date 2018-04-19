@@ -12,8 +12,8 @@ class Profiling
     return yield unless enabled
 
     # Create directory
-    subdir = File.join(config[:dir], label.to_s)
-    FileUtils.mkdir_p subdir unless File.exist? subdir
+    dir = File.join(config[:dir], label.to_s)
+    FileUtils.mkdir_p(dir) unless File.exist?(dir)
 
     require 'ruby-prof'
 
@@ -28,15 +28,15 @@ class Profiling
 
     results = RubyProf.stop
 
-    File.open(File.join(subdir, "graph.html"), 'w') do |file|
+    File.open(File.join(dir, "graph.html"), 'w') do |file|
       RubyProf::GraphHtmlPrinter.new(results).print(file)
     end
 
-    File.open(File.join(subdir, "flat.txt"), 'w') do |file|
+    File.open(File.join(dir, "flat.txt"), 'w') do |file|
       RubyProf::FlatPrinterWithLineNumbers.new(results).print(file)
     end
 
-    File.open(File.join(subdir, "stack.html"), 'w') do |file|
+    File.open(File.join(dir, "stack.html"), 'w') do |file|
       RubyProf::CallStackPrinter.new(results).print(file)
     end
   end
