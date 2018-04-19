@@ -12,7 +12,7 @@ class Profiling
     return yield unless enabled
 
     # Create directory
-    subdir = File.join(File.dirname(__FILE__), config[:dir], label)
+    subdir = File.join(config[:dir], label)
     FileUtils.mkdir_p subdir unless File.exist? subdir
 
     require 'ruby-prof'
