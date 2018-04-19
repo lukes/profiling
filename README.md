@@ -22,15 +22,15 @@ Or install it yourself as:
 
 ## Getting Started
 
-Wrap the slow code like this:
+Wrap your friend's code like this:
 
 ```ruby
 Profile.this("some-label") do
-  # My slow code...
+  # Slow code here...
 end
 ```
 
-The next time you call your code it will be profiled and three files will be written into a directory `profiler/some-label`:
+The next time you call the code it will be profiled and three files will be written into a directory `profiler/some-label`:
 
 | File | Description |
 | ------------- | ------------- |
@@ -56,7 +56,7 @@ Profile.config = {
 
 ## Conditional Profiling
 
-You can conditionally profile by passing a boolean as a second parameter:
+Conditionally profile by passing a boolean as a second parameter. If `false` profiling will be disabled:
 
 ```ruby
 Profile.this("my-label", user.is_admin?) do
