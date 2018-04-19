@@ -35,17 +35,17 @@ RSpec.describe  do
     end
 
     it "should create correct directories" do
-      Profiler.run { 1 * 1}
+      Profiler.run { 1 * 1 }
       expect(File.exist?(File.join(@path))).to be true
     end
 
     it "should create correct directories based on label" do
-      Profiler.run("my/label") { 1 * 1}
+      Profiler.run("my/label") { 1 * 1 }
       expect(File.exist?(File.join(@path, "my/label"))).to be true
     end
 
     it "should write the correct files" do
-      Profiler.run("file-test") { 1 * 1}
+      Profiler.run("file-test") { 1 * 1 }
       ['graph.html', 'stack.html', 'flat.txt'].each do |file|
         expect(File.exist?(File.join(@path, "file-test/#{file}"))).to be true
       end
@@ -53,12 +53,12 @@ RSpec.describe  do
 
     it "should disable profiling when if: false" do
       expect(RubyProf).not_to receive(:start)
-      Profiler.run("file-test", if: false) { 1 * 1}
+      Profiler.run("file-test", if: false) { 1 * 1 }
     end
 
     it "should enable profiling when if: true" do
       expect(RubyProf).to receive(:start)
-      Profiler.run("file-test", if: true) { 1 * 1}
+      Profiler.run("file-test", if: true) { 1 * 1 }
     end
 
     it "should stop ruby-prof when code being profile encounters an exception" do
