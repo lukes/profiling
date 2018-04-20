@@ -31,12 +31,9 @@ class Profiler
 
       # Optionally remove gems from the results
       if !@results.threads.empty? && config[:exclude_gems]
-        @results.threads.each do |thread|
-          thread.methods.each do |method|
-            if method.source_file.match(/\/gems\//)
-              method.eliminate!
-            end
-          end
+        @results.threads.map! do |thread|
+          thread.methods.reject!{ |m| m.source_file.match(/\/gems\//) }
+          thread
         end
       end
 
