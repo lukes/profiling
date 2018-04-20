@@ -72,7 +72,7 @@ Profiler.configure({
 
 ## Is it Fast?
 
-No, no it's not. It's really slow. This gem wraps [ruby-prof](https://github.com/ruby-prof/ruby-prof), which has its profiling code written in C, so it will as quick as it can be. The code being profiled will execute slower, and it takes some more time to generate the files. You will want to get up and get a coffee.
+No, no it's not. It's really slow. This gem wraps [ruby-prof](https://github.com/ruby-prof/ruby-prof), which has its profiling code written in C, so it will as quick as it can be. The code being profiled will execute slower, and it takes some more time to generate the files. For especially gnarly, deeply nested code you will want to get up and get a coffee.
 ## Conditional Profiling
 
 Pass an argument `if:` to enable or disable profiling at run time:
