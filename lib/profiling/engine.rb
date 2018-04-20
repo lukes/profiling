@@ -29,19 +29,11 @@ class Profiler
 
       @results = profile.stop
 
-      # Remove certain things from the profiling
-      unless @results.threads.empty?
-        exclude_paths = []
-
-        if config[:exclude_gems]
-          exclude_paths << /\/gems\//
-        end
-
-        unless exclude_paths.empty?
-          @results.threads.first.methods.each do |method|
-            if exclude_paths.any?{|regex| method.source_file.match(regex) }
-              method.eliminate!
-            end
+      # Optionally remove gems from the results
+      if !@results.threads.empty? && config[:exclude_gems]
+        @results.threads.first.methods.each do |method|
+          if method.source_file.match(/\/gems\//)
+            method.eliminate!
           end
         end
       end
