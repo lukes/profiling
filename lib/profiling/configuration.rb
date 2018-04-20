@@ -2,7 +2,8 @@ class Profiler
   module Configuration
 
     DEFAULT_CONFIG = {
-      dir: 'profiling'
+      dir: 'profiling',
+      exclude_gems: true
     }
 
     attr_accessor :config

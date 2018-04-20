@@ -1,6 +1,7 @@
 RSpec.describe  do
 
   before do
+    # Reset configuration
     Profiler.configure(Profiler::Configuration::DEFAULT_CONFIG)
   end
 
@@ -15,6 +16,10 @@ RSpec.describe  do
       expect(Profiler.config[:dir]).to eq 'my-dir'
     end
 
+    it "should allow you to exclude ruby gems by default" do
+      expect(Profiler.config[:exclude_gems]).to be true
+    end
+
   end
 
   describe "#run" do
@@ -24,7 +29,7 @@ RSpec.describe  do
       Profiler.configure(dir: @path)
 
       allow_any_instance_of(RubyProf::Profile).to receive(:start).and_return(true)
-      allow_any_instance_of(RubyProf::Profile).to receive(:stop).and_return(true)
+      allow_any_instance_of(RubyProf::Profile).to receive(:stop).and_return(OpenStruct.new(threads: []))
       allow_any_instance_of(RubyProf::GraphHtmlPrinter).to receive(:print).and_return(nil)
       allow_any_instance_of(RubyProf::FlatPrinterWithLineNumbers).to receive(:print).and_return(nil)
       allow_any_instance_of(RubyProf::CallStackPrinter).to receive(:print).and_return(nil)
@@ -64,6 +69,34 @@ RSpec.describe  do
     it "should stop ruby-prof when code being profile encounters an exception" do
       expect_any_instance_of(RubyProf::Profile).to receive(:stop)
       expect{Profiler.run("file-test", if: true) do raise StandardError end}.to raise_exception(StandardError)
+    end
+
+    describe "eliminating gem methods" do
+
+      # Setup mock
+      before do
+        @mock_method_instance = double(source_file: 'ruby/gems/fake_gem.rb')
+        mock_result = double(threads: [double(methods: [@mock_method_instance])])
+        expect_any_instance_of(RubyProf::Profile).to receive(:stop).and_return(mock_result)
+      end
+
+      it "should eliminate gem methods if config[:exclude_gems] is true" do
+        Profiler.configure(exclude_gems: true)
+
+        expect(@mock_method_instance).to receive(:eliminate!)
+
+        Profiler.run("file-test", if: true) { 1 * 1 }
+      end
+
+      it "should not eliminate gem methods if config[:exclude_gems] is false" do
+        Profiler.configure(exclude_gems: false)
+        expect(Profiler.config[:exclude_gems]).to be false
+
+        expect(@mock_method_instance).not_to receive(:eliminate!)
+
+        Profiler.run("file-test", if: true) { 1 * 1 }
+      end
+
     end
 
   end
