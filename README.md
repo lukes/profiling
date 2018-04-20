@@ -51,11 +51,10 @@ The next time you call the code it will be profiled and three files will be writ
 
 ## Configuration
 
-Change the directory the files will be generated in:
-
 ```ruby
 Profiler.config = {
-  dir: '/tmp/my-dir'
+  dir: '/tmp/my-dir', # The directory the files will be created in (default is 'profiling')
+  exclude_gems: true  # Exclude ruby gems from the results (default is true)
 }
 ```
 
