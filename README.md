@@ -59,7 +59,7 @@ Profiler.configure({
 })
 ```
 
-## Rails Initializer
+### Rails Initializer
 
 This initializer is recommended if you're planning to profile in Rails:
 
@@ -83,7 +83,8 @@ Profiler.run(if: user.is_admin?) do
 end
 ```
 
-## Preserving artefacts
+## Labels
+### Preserving files between runs
 
 Every time code is profiled the previous files will be overwritten unless the label is dynamic. To keep old files, add the current time in the label so new files are generated with each run:
 
@@ -93,7 +94,7 @@ Profiler.run("my-label-#{Time.now.to_i}") do
 end
 ```
 
-## Organizing artefacts
+### Organizing
 
 Labels translate to directories, so use `/` in your labels to group artefacts together:
 
