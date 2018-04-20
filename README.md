@@ -52,11 +52,11 @@ The next time you call the code it will be profiled and three files will be writ
 ## Configuration
 
 ```ruby
-Profiler.config = {
+Profiler.configure({
   dir: 'profiling', # Directory the files will be created in (default is 'profiling')
   exclude_gems: true, # Exclude ruby gems from the results (default is true)
   exclude_standard_lib: false # Exclude ruby standard library from results (default is false)
-}
+})
 ```
 
 ## Rails Initializer
@@ -65,9 +65,9 @@ This initializer is recommended if you're planning to profile in Rails:
 
 ```ruby
 # config/initializer/profiling.rb
-Profiler.config = {
+Profiler.configure({
   dir: Rails.root.join('tmp/profiling')
-}
+})
 ```
 
 ## Conditional Profiling
