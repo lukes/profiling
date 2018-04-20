@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    profiling (1.2.0)
+    profiling (2.0.0)
       ruby-prof (~> 0.15)
 
 GEM
