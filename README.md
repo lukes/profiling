@@ -53,8 +53,9 @@ The next time you call the code it will be profiled and three files will be writ
 
 ```ruby
 Profiler.config = {
-  dir: '/tmp/my-dir', # The directory the files will be created in (default is 'profiling')
-  exclude_gems: true  # Exclude ruby gems from the results (default is true)
+  dir: '/tmp/my-dir', # Directory the files will be created in (default is 'profiling')
+  exclude_gems: true, # Exclude ruby gems from the results (default is true)
+  exclude_standard_lib: false # Exclude ruby standard library from results (default is false)
 }
 ```
 

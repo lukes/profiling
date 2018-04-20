@@ -12,7 +12,12 @@ class Profiler
       require 'ruby-prof'
 
       profile = RubyProf::Profile.new
+
       profile.exclude_methods!(::Profiler::Engine, :run)
+      profile.exclude_common_methods! if config[:exclude_standard_lib]
+      # Note, we optionally exclude ruby gems after collecting the profile results
+      # instead of here as we can't exclude by a path any other way.
+
       profile.start
 
       begin

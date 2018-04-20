@@ -20,6 +20,10 @@ RSpec.describe  do
       expect(Profiler.config[:exclude_gems]).to be true
     end
 
+    it "should not exclude standard library files by default" do
+      expect(Profiler.config[:exclude_standard_lib]).to be false
+    end
+
   end
 
   describe "#run" do
@@ -97,6 +101,18 @@ RSpec.describe  do
         Profiler.run("file-test", if: true) { 1 * 1 }
       end
 
+    end
+
+    it "should eliminate standard library methods if config[:exclude_standard_lib] is true" do
+      Profiler.configure(exclude_standard_lib: true)
+      expect_any_instance_of(RubyProf::Profile).to receive(:exclude_common_methods!)
+      Profiler.run("file-test", if: true) { 1 * 1 }
+    end
+
+    it "should not eliminate standard library methods if config[:exclude_standard_lib] is false" do
+      Profiler.configure(exclude_standard_lib: false)
+      expect_any_instance_of(RubyProf::Profile).not_to receive(:exclude_common_methods!)
+      Profiler.run("file-test", if: true) { 1 * 1 }
     end
 
   end

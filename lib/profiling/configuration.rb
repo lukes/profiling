@@ -3,7 +3,8 @@ class Profiler
 
     DEFAULT_CONFIG = {
       dir: 'profiling',
-      exclude_gems: true
+      exclude_gems: true,
+      exclude_standard_lib: false
     }
 
     attr_accessor :config
