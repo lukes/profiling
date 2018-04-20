@@ -79,14 +79,15 @@ RSpec.describe  do
 
       # Setup mock
       before do
-        @mock_methods_instance = [double(source_file: 'ruby/gems/fake_gem.rb')]
-        expect_any_instance_of(RubyProf::Profile).to receive(:stop).and_return(double(threads: [double(methods: @mock_methods_instance)]))
+        @mock_method_instance = double(source_file: 'ruby/gems/fake_gem.rb')
+        mock_result = double(threads: [double(methods: [@mock_method_instance])])
+        expect_any_instance_of(RubyProf::Profile).to receive(:stop).and_return(mock_result)
       end
 
       it "should eliminate gem methods if config[:exclude_gems] is true" do
         Profiler.configure(exclude_gems: true)
 
-        expect(@mock_methods_instance).to receive(:reject!)
+        expect(@mock_method_instance).to receive(:eliminate!)
 
         Profiler.run("file-test", if: true) { 1 * 1 }
       end
@@ -95,7 +96,7 @@ RSpec.describe  do
         Profiler.configure(exclude_gems: false)
         expect(Profiler.config[:exclude_gems]).to be false
 
-        expect(@mock_methods_instance).not_to receive(:reject!)
+        expect(@mock_method_instance).not_to receive(:eliminate!)
 
         Profiler.run("file-test", if: true) { 1 * 1 }
       end
