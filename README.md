@@ -72,7 +72,7 @@ Profiler.config = {
 
 ## Conditional Profiling
 
-Pass an argument `if:` to enable or disable profiling:
+Pass an argument `if:` to enable or disable profiling at run time:
 
 ```ruby
 Profiler.run(if: user.is_admin?) do
@@ -82,7 +82,7 @@ end
 
 ## Preserving artefacts
 
-Every time code is profiled the previous files will be overwritten unless the label's dynamic. To keep old files, you could add the current time in the label so new files are generated with each run:
+Every time code is profiled the previous files will be overwritten unless the label is dynamic. To keep old files, add the current time in the label so new files are generated with each run:
 
 ```ruby
 Profiler.run("my-label-#{Time.now.to_i}") do
@@ -92,7 +92,7 @@ end
 
 ## Organizing artefacts
 
-Labels translate to directories, so use `/` in your labels to group profiling together logically:
+Labels translate to directories, so use `/` in your labels to group artefacts together:
 
 ```ruby
 Profiler.run("post/create") do
