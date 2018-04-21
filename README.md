@@ -31,15 +31,9 @@ Profile slow code from your friend or colleague like this:
 Profiler.run do
   # Slow code here...
 end
-
-# or
-
-Profiler.run("some-label") do
-  # Slow code here...
-end
 ```
 
-The next time you call the code it will be profiled and three files will be written into a directory `profiling`, and in the second example `profiling/some-label`.
+The next time you call the code it will be profiled and three files will be written into a directory called `profiling`.
 
 ### Files Generated
 
@@ -49,9 +43,12 @@ The next time you call the code it will be profiled and three files will be writ
 | `stack.html` | See the profiled code as a nested stack |
 | `flat.txt` | List of all functions called, the time spent in each and the number of calls made to that function |
 
-## Configuration
+### Is it Fast?
 
-Use the `configure` method to set your own defaults:
+No, no it's not. It's really slow. For especially gnarly, deeply nested code you will want to get up and get a coffee. This gem wraps [ruby-prof](https://github.com/ruby-prof/ruby-prof) which is partly written in C, so it's as fast as it can be.
+## Options
+
+Use the `configure` method to set some options:
 
 ```ruby
 Profiler.configure({
@@ -63,11 +60,11 @@ Profiler.configure({
 
 | Option | Description | Default |
 | ------ | --------|------------ |
-| `dir` | Directory the files will be created in | `"profiling"` |
+| `dir` | Directory the files will be created in (can be relative or absolute) | `"profiling"` |
 | `exclude_gems` | Exclude ruby gems from the results | `false` |
 | `exclude_standard_lib` | Exclude ruby standard library from results | `false` |
 
-### Rails Initializer
+## Rails Initializer
 
 This initializer is recommended if you're planning to profile in Rails:
 
@@ -78,41 +75,47 @@ Profiler.configure({
 })
 ```
 
-## Is it Fast?
-
-No, no it's not. It's really slow. For especially gnarly, deeply nested code you will want to get up and get a coffee. This gem wraps [ruby-prof](https://github.com/ruby-prof/ruby-prof) which is partly written in C, so it's as fast as it can be.
 ## Conditional Profiling
 
 Pass an argument `if:` to enable or disable profiling at run time:
 
 ```ruby
 Profiler.run(if: user.is_admin?) do
-  # Slow code here...
+  # Profiler will only run when if: is true.
 end
 ```
 
 ## Labels
+
+Labels translate to sub directories that the files will be generated in. This is handy for profiling multiple things at once, preserving files between runs, or grouping profiling results logically.
+
+```ruby
+Profiler.run("some-label") do
+  # Results of code profiled in here will be in "profiling/some-label"
+end
+```
+
 ### Preserving files between runs
 
-Every time code is profiled the previous files will be overwritten unless the label is dynamic. To keep old files, add the current time in the label so new files are generated with each run:
+Every time code is profiled the previous files will be overwritten unless the label is dynamic. Keep old files by adding the current time in the label so new files are generated with each run:
 
 ```ruby
 Profiler.run("my-label-#{Time.now.to_i}") do
-  # Slow code here...
+  # ...
 end
 ```
 
 ### Organizing
 
-Labels translate to directories, so use `/` in your labels to group artefacts together:
+Use `/` in your labels to group artefacts together in directories:
 
 ```ruby
 Profiler.run("post/create") do
-  # Slow code here...
+  # ...
 end
 
 Profiler.run("post/update") do
-  # Slow code here...
+  # ...
 end
 ```
 
