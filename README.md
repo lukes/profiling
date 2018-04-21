@@ -121,7 +121,7 @@ end
 
 ## Contributing
 
-Bug reports and pull requests are welcome.
+Bug reports and pull requests are welcome. Pull requests with passing tests are even better.
 
 To run the test suite:
 
