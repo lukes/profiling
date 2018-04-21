@@ -107,7 +107,7 @@ end
 
 ### Organizing
 
-Use `/` in your labels to group artefacts together in directories:
+Use `/` in your labels to group profiling results together in directories:
 
 ```ruby
 Profiler.run("post/create") do
