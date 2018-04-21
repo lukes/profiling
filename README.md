@@ -51,7 +51,7 @@ The next time you call the code it will be profiled and three files will be writ
 
 ## Configuration
 
-Use the configure method to :
+Use the `configure` method to set your own defaults:
 
 ```ruby
 Profiler.configure({
@@ -61,11 +61,11 @@ Profiler.configure({
 })
 ```
 
-| Option | Default | Description |
+| Option | Description | Default |
 | ------ | --------|------------ |
-| `dir` | `profiling` | Directory the files will be created in |
-| `exclude_gems` | `false` | Exclude ruby gems from the results |
-| `exclude_standard_lib` | `false` | Exclude ruby standard library from results |
+| `dir` | Directory the files will be created in | `"profiling"` |
+| `exclude_gems` | Exclude ruby gems from the results | `false` |
+| `exclude_standard_lib` | Exclude ruby standard library from results | `false` |
 
 ### Rails Initializer
 
