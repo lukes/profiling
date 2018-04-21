@@ -91,7 +91,7 @@ Labels translate to sub directories that the files will be generated in. This is
 
 ```ruby
 Profiler.run("some-label") do
-  # Results of code profiled in here will be in "profiling/some-label"
+  # Results will be in "profiling/some-label"
 end
 ```
 
