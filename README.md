@@ -97,7 +97,7 @@ end
 
 ### Preserving files between runs
 
-Every time code is profiled the previous files will be overwritten unless the label is dynamic. Keep old files by adding the current time in the label so new files are generated with each run:
+Keep old files by adding the current time in the label so new files are generated with each run:
 
 ```ruby
 Profiler.run("my-label-#{Time.now.to_i}") do
