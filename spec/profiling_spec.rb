@@ -67,7 +67,12 @@ RSpec.describe  do
 
     it "should enable profiling when if: true" do
       expect_any_instance_of(RubyProf::Profile).to receive(:start)
-      Profiler.run("file-test", if: true) { 1 * 1 }
+      Profiler.run(if: true) { 1 * 1 }
+    end
+
+    it "should allow a label and conditional profiling" do
+      expect_any_instance_of(RubyProf::Profile).not_to receive(:start)
+      Profiler.run("my-label", if: false) { 1 * 1 }
     end
 
     it "should stop ruby-prof when code being profile encounters an exception" do

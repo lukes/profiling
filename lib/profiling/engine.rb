@@ -1,8 +1,10 @@
 class Profiler
   module Engine
 
-    def run(label=nil, options={})
-      enabled = options[:if].nil? ? true : !!options[:if]
+    def run(*args)
+      label = args.find { |a| a.is_a?(String) }
+      opts = args.find { |a| a.is_a?(Hash) }
+      enabled = opts.nil? ? true : opts[:if]
       return yield unless enabled
 
       # Create directory
