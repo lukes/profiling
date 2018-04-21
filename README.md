@@ -91,7 +91,7 @@ Labels translate to sub directories that the files will be generated in. This is
 
 ```ruby
 Profiler.run("some-label") do
-  # Results will be in "profiling/some-label"
+  # Slow code here...
 end
 ```
 
@@ -101,7 +101,7 @@ Every time code is profiled the previous files will be overwritten unless the la
 
 ```ruby
 Profiler.run("my-label-#{Time.now.to_i}") do
-  # ...
+  # Slow code here...
 end
 ```
 
@@ -111,11 +111,11 @@ Use `/` in your labels to group artefacts together in directories:
 
 ```ruby
 Profiler.run("post/create") do
-  # ...
+  # Slow code here...
 end
 
 Profiler.run("post/update") do
-  # ...
+  # Slow code here...
 end
 ```
 
