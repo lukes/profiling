@@ -51,13 +51,21 @@ The next time you call the code it will be profiled and three files will be writ
 
 ## Configuration
 
+Use the configure method to :
+
 ```ruby
 Profiler.configure({
-  dir: 'profiling', # Directory the files will be created in (default is 'profiling')
-  exclude_gems: true, # Exclude ruby gems from the results (default is true)
-  exclude_standard_lib: false # Exclude ruby standard library from results (default is false)
+  dir: '/tmp/my-dir',
+  exclude_gems: true,
+  exclude_standard_lib: true
 })
 ```
+
+| Option | Default | Description |
+| ------ | --------|------------ |
+| `dir` | `profiling` | Directory the files will be created in |
+| `exclude_gems` | `false` | Exclude ruby gems from the results |
+| `exclude_standard_lib` | `false` | Exclude ruby standard library from results |
 
 ### Rails Initializer
 
@@ -72,7 +80,7 @@ Profiler.configure({
 
 ## Is it Fast?
 
-No, no it's not. It's really slow. This gem wraps [ruby-prof](https://github.com/ruby-prof/ruby-prof), which has its profiling code written in C, so it will be as quick as it can be. The code being profiled will execute slower, and it takes some more time to generate the files. For especially gnarly, deeply nested code you will want to get up and get a coffee.
+No, no it's not. It's really slow. For especially gnarly, deeply nested code you will want to get up and get a coffee. This gem wraps [ruby-prof](https://github.com/ruby-prof/ruby-prof) which is partly written in C, so it's as fast as it can be.
 ## Conditional Profiling
 
 Pass an argument `if:` to enable or disable profiling at run time:
