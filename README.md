@@ -100,7 +100,7 @@ end
 Keep old files by adding the current time in the label so new files are generated with each run:
 
 ```ruby
-Profiler.run("my-label-#{Time.now.to_i}") do
+Profiler.run("some-label-#{Time.now.to_i}") do
   # Slow code here...
 end
 ```
