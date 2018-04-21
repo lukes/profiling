@@ -16,12 +16,22 @@ RSpec.describe  do
       expect(Profiler.config[:dir]).to eq 'my-dir'
     end
 
-    it "should allow you to exclude ruby gems by default" do
+    it "should not exclude ruby gems by default" do
+      expect(Profiler.config[:exclude_gems]).to be false
+    end
+
+    it "should allow you to exclude ruby gems" do
+      Profiler.configure(exclude_gems: true)
       expect(Profiler.config[:exclude_gems]).to be true
     end
 
     it "should not exclude standard library files by default" do
       expect(Profiler.config[:exclude_standard_lib]).to be false
+    end
+
+    it "should allow you to exclude standard library files" do
+      Profiler.configure(exclude_standard_lib: true)
+      expect(Profiler.config[:exclude_standard_lib]).to be true
     end
 
   end
@@ -62,7 +72,7 @@ RSpec.describe  do
 
     it "should disable profiling when if: false" do
       expect_any_instance_of(RubyProf::Profile).not_to receive(:start)
-      Profiler.run("file-test", if: false) { 1 * 1 }
+      Profiler.run(if: false) { 1 * 1 }
     end
 
     it "should enable profiling when if: true" do
@@ -77,7 +87,7 @@ RSpec.describe  do
 
     it "should stop ruby-prof when code being profile encounters an exception" do
       expect_any_instance_of(RubyProf::Profile).to receive(:stop)
-      expect{Profiler.run("file-test", if: true) do raise StandardError end}.to raise_exception(StandardError)
+      expect{Profiler.run do raise StandardError end}.to raise_exception(StandardError)
     end
 
     describe "eliminating gem methods" do
@@ -91,19 +101,16 @@ RSpec.describe  do
 
       it "should eliminate gem methods if config[:exclude_gems] is true" do
         Profiler.configure(exclude_gems: true)
-
         expect(@mock_method_instance).to receive(:eliminate!)
 
-        Profiler.run("file-test", if: true) { 1 * 1 }
+        Profiler.run { 1 * 1 }
       end
 
       it "should not eliminate gem methods if config[:exclude_gems] is false" do
         Profiler.configure(exclude_gems: false)
-        expect(Profiler.config[:exclude_gems]).to be false
-
         expect(@mock_method_instance).not_to receive(:eliminate!)
 
-        Profiler.run("file-test", if: true) { 1 * 1 }
+        Profiler.run { 1 * 1 }
       end
 
     end
@@ -111,13 +118,15 @@ RSpec.describe  do
     it "should eliminate standard library methods if config[:exclude_standard_lib] is true" do
       Profiler.configure(exclude_standard_lib: true)
       expect_any_instance_of(RubyProf::Profile).to receive(:exclude_common_methods!)
-      Profiler.run("file-test", if: true) { 1 * 1 }
+
+      Profiler.run("file-test") { 1 * 1 }
     end
 
     it "should not eliminate standard library methods if config[:exclude_standard_lib] is false" do
       Profiler.configure(exclude_standard_lib: false)
       expect_any_instance_of(RubyProf::Profile).not_to receive(:exclude_common_methods!)
-      Profiler.run("file-test", if: true) { 1 * 1 }
+
+      Profiler.run("file-test") { 1 * 1 }
     end
 
   end

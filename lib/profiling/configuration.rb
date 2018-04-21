@@ -3,7 +3,7 @@ class Profiler
 
     DEFAULT_CONFIG = {
       dir: 'profiling',
-      exclude_gems: true,
+      exclude_gems: false,
       exclude_standard_lib: false
     }
 
