@@ -81,7 +81,7 @@ Pass an argument `if:` to enable or disable profiling at run time:
 
 ```ruby
 Profiler.run(if: user.is_admin?) do
-  # Profiler will only run when if: is true.
+  # Slow code here...
 end
 ```
 
