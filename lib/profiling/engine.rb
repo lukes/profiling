@@ -31,10 +31,10 @@ class Profiler
 
       @results = profile.stop
 
-      # Optionally remove gems from the results
-      if !@results.threads.empty? && config[:exclude_gems]
+      # Optionally remove gems (and the remainder of any standard lib) from the results
+      if !@results.threads.empty? && exclusion_regex
         @results.threads.each do |thread|
-          thread.methods.each { |m| m.eliminate! if m.source_file.match(/\/gems\//) }
+          thread.methods.each { |m| m.eliminate! if m.source_file.match(exclusion_regex) }
         end
       end
 
@@ -54,6 +54,16 @@ class Profiler
 
       File.open(File.join(@dir, "stack.html"), 'w') do |file|
         RubyProf::CallStackPrinter.new(@results).print(file)
+      end
+    end
+
+    def exclusion_regex
+      regex = if config[:exclude_gems] && config[:exclude_standard_lib]
+        /\/lib\/ruby\//
+      elsif config[:exclude_gems]
+        /\/lib\/ruby\/gems\//
+      elsif config[:exclude_standard_lib]
+        /\/lib\/ruby\/[^g]/
       end
     end
 
