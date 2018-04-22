@@ -58,12 +58,13 @@ class Profiler
     end
 
     def exclusion_regex
-      regex = if config[:exclude_gems] && config[:exclude_standard_lib]
-        /\/lib\/ruby\//
+      root = "/lib/ruby/"
+      if config[:exclude_gems] && config[:exclude_standard_lib]
+        /#{root}/
       elsif config[:exclude_gems]
-        /\/lib\/ruby\/gems\//
+        /#{root}gems\//
       elsif config[:exclude_standard_lib]
-        /\/lib\/ruby\/[^g]/
+        /#{root}[^g]/
       end
     end
 
