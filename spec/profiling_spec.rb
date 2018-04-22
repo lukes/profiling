@@ -118,16 +118,26 @@ RSpec.describe  do
 
       describe "standard lib" do
 
+        before do
+          @mock_method_instance = double(source_file: '/lib/ruby/2.0.0')
+          mock_result = double(threads: [double(methods: [@mock_method_instance])])
+          expect_any_instance_of(RubyProf::Profile).to receive(:stop).and_return(mock_result)
+        end
+
         it "should eliminate standard library methods if config[:exclude_standard_lib] is true" do
           Profiler.configure(exclude_standard_lib: true)
+
           expect_any_instance_of(RubyProf::Profile).to receive(:exclude_common_methods!)
+          expect(@mock_method_instance).to receive(:eliminate!)
 
           Profiler.run("file-test") { 1 * 1 }
         end
 
         it "should not eliminate standard library methods if config[:exclude_standard_lib] is false" do
           Profiler.configure(exclude_standard_lib: false)
+
           expect_any_instance_of(RubyProf::Profile).not_to receive(:exclude_common_methods!)
+          expect(@mock_method_instance).not_to receive(:eliminate!)
 
           Profiler.run("file-test") { 1 * 1 }
         end
