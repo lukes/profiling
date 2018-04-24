@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Luke Duncalfe"]
   spec.email         = ["lduncalfe@eml.cc"]
 
-  spec.summary       = "Non-discriminatory Ruby code profiling: This gem is a small wrapper around the ruby-prof gem to do simple but powerful profiling"
-  spec.description   = "Non-discriminatory Ruby code profiling: This gem is a small wrapper around the ruby-prof gem to do simple but powerful profiling"
+  spec.summary       = "Non-discriminatory profiler for Ruby MRI code."
+  spec.description   = "Non-discriminatory profiler for Ruby MRI code. This gem is a small wrapper around the ruby-prof gem to do simple but powerful profiling"
   spec.homepage      = "https://github.com/lukes/profiling"
   spec.license       = "MIT"
 
