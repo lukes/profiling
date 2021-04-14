@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-       - image: circleci/ruby:2.4.1-node-browsers
+       - image: circleci/ruby:2.7-node
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -29,6 +29,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
+            gem install bundler:2.2.3
             bundle install --jobs=4 --retry=3 --path vendor/bundle
 
       - save_cache:
@@ -36,11 +37,16 @@ jobs:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
+      # Database setup
+      # - run: bundle exec rake db:create
+      # - run: bundle exec rake db:schema:load
+
       # run tests!
       - run:
           name: run tests
           command: |
             mkdir /tmp/test-results
+
             bundle exec rspec spec --format progress --format RspecJunitFormatter --out /tmp/test-results/rspec.xml
 
       # collect reports
