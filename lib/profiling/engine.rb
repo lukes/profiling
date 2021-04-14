@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 class Profiler
   module Engine
-
     def run(*args)
       label = args.find { |a| a.is_a?(String) }
       opts = args.find { |a| a.is_a?(Hash) }
@@ -24,7 +25,7 @@ class Profiler
 
       begin
         yield
-      rescue => e
+      rescue StandardError => e
         profile.stop
         raise e
       end
@@ -38,35 +39,34 @@ class Profiler
         end
       end
 
-      out()
+      out
     end
 
     private
 
     def out
-      File.open(File.join(@dir, "graph.html"), 'w') do |file|
+      File.open(File.join(@dir, 'graph.html'), 'w') do |file|
         RubyProf::GraphHtmlPrinter.new(@results).print(file)
       end
 
-      File.open(File.join(@dir, "flat.txt"), 'w') do |file|
-        RubyProf::FlatPrinterWithLineNumbers.new(@results).print(file)
+      File.open(File.join(@dir, 'flat.txt'), 'w') do |file|
+        RubyProf::FlatPrinter.new(@results).print(file)
       end
 
-      File.open(File.join(@dir, "stack.html"), 'w') do |file|
+      File.open(File.join(@dir, 'stack.html'), 'w') do |file|
         RubyProf::CallStackPrinter.new(@results).print(file)
       end
     end
 
     def exclusion_regex
-      root = "/lib/ruby/"
+      root = '/lib/ruby/'
       if config[:exclude_gems] && config[:exclude_standard_lib]
         /#{root}/
       elsif config[:exclude_gems]
-        /#{root}gems\//
+        %r{#{root}gems/}
       elsif config[:exclude_standard_lib]
         /#{root}[^g]/
       end
     end
-
   end
 end

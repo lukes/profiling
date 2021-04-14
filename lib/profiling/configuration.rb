@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 class Profiler
   module Configuration
-
     DEFAULT_CONFIG = {
       dir: 'profiling',
       exclude_gems: false,
       exclude_standard_lib: false
-    }
+    }.freeze
 
     attr_accessor :config
 
