@@ -12,7 +12,7 @@ Non-discriminatory profiling for your MRI Ruby code. This gem is a small wrapper
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'profiling', "~> 3.0"
+gem 'profiling', "~> 4.0"
 ```
 
 And then execute:
